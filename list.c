@@ -116,6 +116,26 @@ int List_remove(List* list, unsigned int i, unsigned int n) {
     return 1;
 }
 
+// Copies the value found at the given index to the passed pointer.
+// Returns 0 on error and 1 on success.
+int List_get(List* list, unsigned int i, int* value_ptr) {
+    if(i >= list->len) {
+        return 0;
+    }
+    *value_ptr = list->data[i];
+    return 1;
+}
+
+// Sets the value at the given index.
+// Returns 0 on error and 1 on success.
+int List_set(List* list, unsigned int i, int new_value) {
+    if(i >= list->len) {
+        return 0;
+    }
+    list->data[i] = new_value;
+    return 1;
+}
+
 // Prints the given list to stdout.
 // Example:
 //     Length: 4
@@ -151,6 +171,21 @@ int main() {
         }
     }
     List_remove(list, 0, 512);
+    int val;
+    if(!List_get(list, 0, &val)) {
+        printf("Getting ai index 0 failed. Abort.\n");
+        return EXIT_FAILURE;
+    }
+    printf("list[0] == %i\n", val);
+    if(!List_set(list, 0, 0)) {
+        printf("Setting at index 0 failed. Abort.\n");
+        return EXIT_FAILURE;
+    }
+    if(!List_get(list, 0, &val)) {
+        printf("Getting after setting at index 0 failed. Abort.\n");
+        return EXIT_FAILURE;
+    }
+    printf("New value: list[0] == %i\n", val);
     List_print(list);
     List_free(list);
     return EXIT_SUCCESS;
