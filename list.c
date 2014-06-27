@@ -161,7 +161,7 @@ void List_free(List* list) {
 int main() {
     List* list = List_new(128);
     if(list == NULL) {
-        printf("Error creating list. Abort.");
+        printf("Error creating list. Abort.\n");
         return EXIT_FAILURE;
     }
     for(int i = 0; i < 1024; i++) {
