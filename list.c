@@ -154,39 +154,46 @@ void List_print(List* list) {
 
 // Releases all resources of the given list.
 void List_free(List* list) {
-    free(list->data);
-    free(list);
+    if(list != NULL) {
+        if(list->data != NULL) {
+            free(list->data);
+        }
+        free(list);
+    }
 }
 
 int main() {
     List* list = List_new(128);
     if(list == NULL) {
         printf("Error creating list. Abort.\n");
-        return EXIT_FAILURE;
+        goto error;
     }
     for(int i = 0; i < 1024; i++) {
         if(!List_add(list, i)) {
             printf("Error adding item. Abort.\n");
-            return EXIT_FAILURE;
+            goto error;
         }
     }
     List_remove(list, 0, 512);
     int val;
     if(!List_get(list, 0, &val)) {
         printf("Getting ai index 0 failed. Abort.\n");
-        return EXIT_FAILURE;
+        goto error;
     }
     printf("list[0] == %i\n", val);
     if(!List_set(list, 0, 0)) {
         printf("Setting at index 0 failed. Abort.\n");
-        return EXIT_FAILURE;
+        goto error;
     }
     if(!List_get(list, 0, &val)) {
         printf("Getting after setting at index 0 failed. Abort.\n");
-        return EXIT_FAILURE;
+        goto error;
     }
     printf("New value: list[0] == %i\n", val);
     List_print(list);
     List_free(list);
     return EXIT_SUCCESS;
+error:
+    List_free(list);
+    return EXIT_FAILURE;
 }
