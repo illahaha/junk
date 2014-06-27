@@ -71,6 +71,7 @@ int List_change_capacity(List* list, unsigned int new_capacity) {
         len = new_capacity;
     }
     memcpy(list->data, old_data, sizeof(int)*len);
+    free(old_data);
     list->cap = new_capacity;
     list->len = len;
     return 1;
