@@ -31,11 +31,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct List {
+typedef struct {
     int* data;
     unsigned int len;
     unsigned int cap;
-} typedef List;
+} List;
 
 // Allocate a new List with the given capacity.
 // Returns NULL if list could not be allocated.
